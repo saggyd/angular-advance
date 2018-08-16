@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import {DataService} from '../data.service';
 
 @Component({
   selector: 'app-login-details',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private ds: DataService, private router: Router) { }
+
+  isLogedIn: Boolean = false;
 
   ngOnInit() {
+  }
+
+  submitHandler = (form) => {
+    this.ds.handleLogin(form).subscribe(data => {
+      if(data['token']) {
+        this.router.navigate(['/dashboard']);
+      }      
+    });
   }
 
 }
