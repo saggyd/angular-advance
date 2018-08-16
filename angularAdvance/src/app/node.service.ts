@@ -7,11 +7,11 @@ import {Subject, BehaviorSubject } from 'rxjs';
 export class NodeService {
 
   constructor() { }
-  private node:Subject<Node> = new BehaviorSubject<Node>();
-  
+  private node:Subject<Boolean> = new BehaviorSubject<Boolean>();
+
   node$ = this.node.asObservable();
 
-  addNode(data:Node) {
+  addNode(data:Boolean) {
     this.node.next(data);
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {DataService} from '../data.service';
+import { NodeService } from '../../node.service';
 
 @Component({
   selector: 'app-login-details',
@@ -10,7 +11,7 @@ import {DataService} from '../data.service';
 })
 export class LoginDetailsComponent implements OnInit {
 
-  constructor(private ds: DataService, private router: Router) { }
+  constructor(private ds: DataService, private router: Router,private ns: NodeService) { }
 
   isLogedIn: Boolean = false;
 
@@ -20,6 +21,8 @@ export class LoginDetailsComponent implements OnInit {
   submitHandler = (form) => {
     this.ds.handleLogin(form).subscribe(data => {
       if(data['token']) {
+        this.isLogedIn = true;
+        this.ns.addNode(this.isLogedIn);
         this.router.navigate(['/dashboard']);
       }      
     });
